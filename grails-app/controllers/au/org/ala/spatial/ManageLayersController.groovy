@@ -179,7 +179,7 @@ class ManageLayersController {
     @RequireAdmin
     def upload() {
         log.debug("Receiving upload of zip file")
-        String id = String.valueOf(System.currentTimeMillis())
+        String id = String.valueOf(System.currentTimeSeconds())
 
         def file
         try {
