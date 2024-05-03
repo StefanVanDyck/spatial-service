@@ -516,10 +516,12 @@ class TasksService {
         List list = []
 
         def resource = TaskQueueService.class.getResource("/processes/")
+        log.error("Resources located here: ${resource.getPath()}")
         def dir = new File(resource.getPath())
 
         // default processes
         for (File f : dir.listFiles()) {
+            log.error("File located here: ${f.getPath()}")
             if (f.getName().endsWith(".json") && f.getName() != "limits.json") {
                 String name = "au.org.ala.spatial.process." + f.getName().substring(0, f.getName().length() - 5)
                 try {
