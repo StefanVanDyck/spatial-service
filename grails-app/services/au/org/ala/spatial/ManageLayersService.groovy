@@ -152,7 +152,7 @@ class ManageLayersService {
         //no upload dir, look in existing layers, at layer.id
         if (!upload.containsKey("raw_id")) {
             try {
-                Layers layer = layerService.getLayerById(Long.parseLong(uploadId))
+                Layers layer = layerService.getLayerById(Integer.parseInt(uploadId))
                 if (layer != null) {
                     upload.put("raw_id", uploadId)
                     upload.put("layer_id", uploadId)
@@ -443,7 +443,7 @@ class ManageLayersService {
             map.putAll(jo)
         } catch (Exception ignored) {
             try {
-                Layers l = layerService.getLayerById(Long.parseLong(layerId.replaceAll('[ec]l', "")), false)
+                Layers l = layerService.getLayerById(Integer.parseInt(layerId.replaceAll('[ec]l', "")), false)
                 if (l) {
                     if (!upload.name) {
                         map.putAll(l.properties)
@@ -471,7 +471,7 @@ class ManageLayersService {
 
         map.put("has_layer", map.containsKey("layer_id"))
         if (map.containsKey("layer_id")) {
-            Layers layer = layerService.getLayerById(Long.parseLong(map.layer_id as String), false)
+            Layers layer = layerService.getLayerById(Integer.parseInt(map.layer_id as String), false)
 
             if(layer) {
                 map.putAll(layer.properties)
@@ -816,7 +816,7 @@ class ManageLayersService {
      * @return
      */
     def fieldMap(String fieldId) {
-        def layer = layerService.getLayerById(Long.parseLong(fieldService.getFieldById(fieldId, false).spid), false)
+        def layer = layerService.getLayerById(Integer.parseInt(fieldService.getFieldById(fieldId, false).spid), false)
 
         def map = fieldMapDefault(String.valueOf(layer.id))
         map.put("layerName", layer.name) // layer name for wms requests
