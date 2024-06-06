@@ -511,9 +511,8 @@ class TasksService {
         def resolver = new PathMatchingResourcePatternResolver()
         Resource[] resources = resolver.getResources("/processes/*.json") ;
         for (Resource resource: resources){
-            File f = resource.getFile()
-            if (f.getName().endsWith(".json") && f.getName() != "limits.json") {
-                String name = "au.org.ala.spatial.process." + f.getName().substring(0, f.getName().length() - 5)
+            if (resource.getFilename() != "limits.json") {
+                String name = "au.org.ala.spatial.process." + resource.getFilename().substring(0, resource.getFilename().length() - 5)
                 try {
                     Class clazz = Class.forName(name)
                     list.add(((SlaveProcess) clazz.newInstance()).spec(null))
