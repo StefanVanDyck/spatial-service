@@ -17,22 +17,15 @@ package au.org.ala.spatial
 
 import au.org.ala.spatial.dto.ProcessSpecification
 import au.org.ala.spatial.dto.SpeciesInput
-import au.org.ala.spatial.process.SlaveProcess
 import au.org.ala.spatial.dto.TaskWrapper
-import au.org.ala.spatial.util.SpatialUtils
+import au.org.ala.spatial.process.SlaveProcess
 import au.org.ala.ws.service.WebService
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
-import org.apache.commons.lang3.StringUtils
+import org.grails.io.support.PathMatchingResourcePatternResolver
+import org.grails.io.support.Resource
 
-import static au.org.ala.spatial.dto.ProcessSpecification.InputType.AREA
-import static au.org.ala.spatial.dto.ProcessSpecification.InputType.DOUBLE
-import static au.org.ala.spatial.dto.ProcessSpecification.InputType.INT
-import static au.org.ala.spatial.dto.ProcessSpecification.InputType.LAYER
-import static au.org.ala.spatial.dto.ProcessSpecification.InputType.PROCESS
-import static au.org.ala.spatial.dto.ProcessSpecification.InputType.SPECIES
-import static au.org.ala.spatial.dto.ProcessSpecification.InputType.STRING
-import static au.org.ala.spatial.dto.ProcessSpecification.InputType.UPLOAD
+import static au.org.ala.spatial.dto.ProcessSpecification.InputType.*
 
 class TasksService {
 
@@ -515,11 +508,10 @@ class TasksService {
     List getAllSpec() {
         List list = []
 
-        def resource = TaskQueueService.class.getResource("/processes/")
-        def dir = new File(resource.getPath())
-
-        // default processes
-        for (File f : dir.listFiles()) {
+        def resolver = new PathMatchingResourcePatternResolver()
+        Resource[] resources = resolver.getResources("/processes/*.json") ;
+        for (Resource resource: resources){
+            File f = resource.getFile()
             if (f.getName().endsWith(".json") && f.getName() != "limits.json") {
                 String name = "au.org.ala.spatial.process." + f.getName().substring(0, f.getName().length() - 5)
                 try {
