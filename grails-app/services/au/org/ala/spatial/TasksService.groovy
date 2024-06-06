@@ -519,6 +519,7 @@ class TasksService {
             if (resource.getFilename() != "limits.json") {
                 String name = "au.org.ala.spatial.process." + resource.getFilename().substring(0, resource.getFilename().length() - 5)
                 try {
+                    log.warn(name)
                     Class clazz = Class.forName(name)
                     list.add(((SlaveProcess) clazz.newInstance()).spec(null))
                 } catch (err) {
