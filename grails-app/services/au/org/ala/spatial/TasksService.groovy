@@ -22,11 +22,14 @@ import au.org.ala.spatial.process.SlaveProcess
 import au.org.ala.ws.service.WebService
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
+import groovy.util.logging.Slf4j
 import org.grails.io.support.PathMatchingResourcePatternResolver
 import org.grails.io.support.Resource
 
 import static au.org.ala.spatial.dto.ProcessSpecification.InputType.*
 
+
+@Slf4j
 class TasksService {
 
     SpatialObjectsService spatialObjectsService
@@ -483,6 +486,7 @@ class TasksService {
         if (!_spec) {
 
             getAllSpec().each { ProcessSpecification it ->
+                log.warn("GetSpecification: " + it.name)
                 def name = it.name
                 def cap = it
                 _specAdmin.put(name, cap)
@@ -511,6 +515,7 @@ class TasksService {
         def resolver = new PathMatchingResourcePatternResolver()
         Resource[] resources = resolver.getResources("/processes/*.json") ;
         for (Resource resource: resources){
+            log.warn("Resource: " + resource.getFilename())
             if (resource.getFilename() != "limits.json") {
                 String name = "au.org.ala.spatial.process." + resource.getFilename().substring(0, resource.getFilename().length() - 5)
                 try {
