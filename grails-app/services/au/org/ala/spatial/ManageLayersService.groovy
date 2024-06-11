@@ -271,7 +271,8 @@ class ManageLayersService {
                 log.error("No SHP or TIF available....")
                 map.put("error", "no layer files")
             } else {
-                def errors = publishService.layerToGeoserver([files: [shp.exists() ? shp.getPath() : bil.getPath()]], null)
+                OutputParameter output = new OutputParameter([file: [shp.exists() ? shp.getPath() : bil.getPath()]])
+                def errors = publishService.layerToGeoserver(output, null)
 
                 if (errors) {
                     log.error("Errors uploading to geoserver...." + errors.inspect())
