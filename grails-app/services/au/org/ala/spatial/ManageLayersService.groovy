@@ -443,7 +443,7 @@ class ManageLayersService {
             map.putAll(jo)
         } catch (Exception ignored) {
             try {
-                Layers l = layerService.getLayerById(Integer.parseInt(layerId.replaceAll('[ec]l', "")), false)
+                Layers l = layerService.getLayerById(Long.parseLong(layerId.replaceAll('[ec]l', "")), false)
                 if (l) {
                     if (!upload.name) {
                         map.putAll(l.properties)
