@@ -23,6 +23,7 @@ import au.org.ala.spatial.intersect.Grid
 import au.org.ala.spatial.intersect.SamplingThread
 import au.org.ala.spatial.intersect.SimpleShapeFile
 
+import javax.transaction.Transactional
 import java.util.Map.Entry
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.LinkedBlockingQueue
@@ -507,6 +508,7 @@ class LayerIntersectService {
     }
 
 
+    @Transactional
     ArrayList<String> sampling(String[] fieldIds, double[][] points, IntersectCallback callback) {
         init()
         IntersectionFile[] intersectionFiles = new IntersectionFile[fieldIds.length]
