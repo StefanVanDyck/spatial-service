@@ -23,6 +23,7 @@ import au.org.ala.spatial.intersect.Grid
 import au.org.ala.spatial.intersect.SamplingThread
 import au.org.ala.spatial.intersect.SimpleShapeFile
 
+import javax.transaction.Transactional
 import java.util.Map.Entry
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.LinkedBlockingQueue
@@ -239,7 +240,7 @@ class LayerIntersectService {
      * @return the intersection value for each input field id as a \n separated
      * String.
      */
-
+    @Transactional
     String sampling(String fieldIds, double longitude, double latitude) {
         init()
 
@@ -354,7 +355,7 @@ class LayerIntersectService {
         return sb.toString()
     }
 
-
+    @Transactional
     HashMap<String, String> sampling(double longitude, double latitude) {
         init()
 
@@ -402,7 +403,7 @@ class LayerIntersectService {
         return output
     }
 
-
+    @Transactional
     HashMap[] sampling(String pointsString, int gridcacheToUse) {
         init()
 
@@ -483,7 +484,7 @@ class LayerIntersectService {
         return output
     }
 
-
+    @Transactional
     ArrayList<String> sampling(String fieldIds, String pointsString) {
         init()
 
@@ -507,6 +508,7 @@ class LayerIntersectService {
     }
 
 
+    @Transactional
     ArrayList<String> sampling(String[] fieldIds, double[][] points, IntersectCallback callback) {
         init()
         IntersectionFile[] intersectionFiles = new IntersectionFile[fieldIds.length]
@@ -529,15 +531,18 @@ class LayerIntersectService {
     }
 
 
+    @Transactional
     ArrayList<String> sampling(String[] fieldIds, double[][] points) {
         sampling(fieldIds, points, new DummyCallback())
     }
 
 
+    @Transactional
     ArrayList<String> sampling(IntersectionFile[] intersectionFiles, double[][] points) {
         sampling(intersectionFiles, points, new DummyCallback())
     }
 
+    @Transactional
     ArrayList<String> sampling(IntersectionFile[] intersectionFiles, double[][] points, IntersectCallback callback) {
         init()
         if (callback == null)

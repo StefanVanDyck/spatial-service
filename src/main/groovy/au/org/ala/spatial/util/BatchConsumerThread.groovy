@@ -5,6 +5,7 @@ import au.org.ala.spatial.intersect.IntersectUtil
 import au.org.ala.spatial.LayerIntersectService
 import groovy.transform.CompileStatic
 
+import javax.transaction.Transactional
 import java.text.SimpleDateFormat
 import java.util.concurrent.LinkedBlockingQueue
 @CompileStatic
@@ -21,6 +22,7 @@ class BatchConsumerThread extends Thread {
     }
 
     @Override
+    @Transactional
     void run() {
         boolean repeat = true
         String id = ""
