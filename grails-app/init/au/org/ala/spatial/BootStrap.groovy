@@ -18,7 +18,7 @@ import org.locationtech.jts.geom.GeometryCollection
 //@CompileStatic
 class BootStrap {
 
-    Sql groovySql
+    def dataSource
     def messageSource
     SpatialConfig spatialConfig
 
@@ -48,6 +48,9 @@ class BootStrap {
                 def result = it.properties.findAll { it.key != 'class' && it.key != 'version' && it.value != null }
                 if (id) {
                     result += [id: id]
+                }
+                if (it instanceof Layers && result.containsKey("dt_added")) {
+                    result += [dt_added: ((Layers) it).dt_added.time]
                 }
                 result
             }
@@ -103,6 +106,8 @@ class BootStrap {
 //        } catch (Exception e) {
 //            log.error("Error creating missing azimuth function frmo st_azimuth", e)
 //        }
+
+        def groovySql = Sql.newInstance(dataSource)
 
         // manual db modification
         String [] dbModificationSql = [
