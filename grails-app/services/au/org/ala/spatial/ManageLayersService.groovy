@@ -24,7 +24,7 @@ import groovy.util.logging.Slf4j
 import org.apache.commons.httpclient.methods.FileRequestEntity
 import org.apache.commons.httpclient.methods.StringRequestEntity
 import org.apache.commons.io.FileUtils
-import org.apache.commons.lang.StringUtils
+import java.text.NumberFormat
 import org.geotools.data.shapefile.ShapefileDataStore
 import org.json.simple.JSONObject
 import org.json.simple.JSONValue
@@ -297,7 +297,7 @@ class ManageLayersService {
             log.error("Path does not exist..." + pth)
         }
 
-        return [error: pth + " does not exist!" ]
+        return [error: pth + " does not exist!"]
     }
 
     /**
@@ -476,7 +476,7 @@ class ManageLayersService {
         if (map.containsKey("layer_id")) {
             Layers layer = layerService.getLayerById(Integer.parseInt(map.layer_id as String), false)
 
-            if(layer) {
+            if (layer) {
                 map.putAll(layer.properties)
             }
 
@@ -819,7 +819,7 @@ class ManageLayersService {
      * So, if it is an edit function, the requestId should be unchanged.
      *
      *
-     * @param fieldId  It is field id if starts with el/cl, otherwise layer id
+     * @param fieldId It is field id if starts with el/cl, otherwise layer id
      * @return
      */
     def fieldMap(String fieldId) {
@@ -868,7 +868,7 @@ class ManageLayersService {
         checkboxFields["enabled"] = false
         checkboxFields.each { key, value ->
             if (!map.containsKey(key)) {
-                map.put(key,value)
+                map.put(key, value)
             }
         }
 
@@ -881,7 +881,8 @@ class ManageLayersService {
         if (map.containsKey('id')) {
             try {
                 layer.id = map.get('id') as Long
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
 
         createOrUpdateLayer(layer, id, createTask)
@@ -921,7 +922,7 @@ class ManageLayersService {
 //                    originalField = null
 
                     Fields.withTransaction {
-                        if (!layer.save(flush: true, validate:true)) {
+                        if (!layer.save(flush: true, validate: true)) {
                             layer.errors.each {
                                 log.error(it)
                             }
@@ -940,19 +941,19 @@ class ManageLayersService {
                 try {
                     //defaults, in case of missing values
                     def defaultLayer = layerMap(id)
-                    if (!layer.name) layer.name= defaultLayer.name
-                    if (!layer.environmentalvaluemin) layer.environmentalvaluemin= defaultLayer.environmentalvaluemin
-                    if (!layer.environmentalvaluemax) layer.environmentalvaluemax= defaultLayer.environmentalvaluemax
+                    if (!layer.name) layer.name = defaultLayer.name
+                    if (!layer.environmentalvaluemin) layer.environmentalvaluemin = defaultLayer.environmentalvaluemin
+                    if (!layer.environmentalvaluemax) layer.environmentalvaluemax = defaultLayer.environmentalvaluemax
                     if (!layer.extents) layer.extents = defaultLayer.extents
                     if (!layer.domain) layer.domain = defaultLayer.domain
-                    if (!layer.maxlatitude) layer.maxlatitude= Double.valueOf(defaultLayer.maxlatitude)
-                    if (!layer.minlatitude) layer.minlatitude= Double.valueOf(defaultLayer.minlatitude)
-                    if (!layer.maxlongitude) layer.maxlongitude= Double.valueOf(defaultLayer.maxlongitude)
-                    if (!layer.minlongitude) layer.minlongitude= Double.valueOf(defaultLayer.minlongitude)
-                    if (!layer.displayname) layer.displayname= defaultLayer.displayname
+                    if (!layer.maxlatitude) layer.maxlatitude = Double.valueOf(defaultLayer.maxlatitude)
+                    if (!layer.minlatitude) layer.minlatitude = Double.valueOf(defaultLayer.minlatitude)
+                    if (!layer.maxlongitude) layer.maxlongitude = Double.valueOf(defaultLayer.maxlongitude)
+                    if (!layer.minlongitude) layer.minlongitude = Double.valueOf(defaultLayer.minlongitude)
+                    if (!layer.displayname) layer.displayname = defaultLayer.displayname
                     if (layer.enabled == null) layer.enabled = true
-                    if (!layer.environmentalvalueunits) layer.environmentalvalueunits= defaultLayer.environmentalvalueunits
-                    if (!layer.type) layer.type= defaultLayer.type
+                    if (!layer.environmentalvalueunits) layer.environmentalvalueunits = defaultLayer.environmentalvalueunits
+                    if (!layer.type) layer.type = defaultLayer.type
 
                     if (layerService.getLayerByName(layer.name.toString(), false) != null) {
                         retMap.put("error", "name: " + layer.name + " is not unique")
@@ -1058,7 +1059,7 @@ class ManageLayersService {
 
         checkboxFields.each { key, value ->
             if (!map.containsKey(key)) {
-                map.put(key,value)
+                map.put(key, value)
             }
         }
 
@@ -1097,7 +1098,7 @@ class ManageLayersService {
 //                    originalField = null
 
                     Fields.withTransaction {
-                        if (!field.save(flush: true, validate:true)) {
+                        if (!field.save(flush: true, validate: true)) {
                             field.errors.each {
                                 log.error(it)
                             }
@@ -1156,7 +1157,7 @@ class ManageLayersService {
                 boolean b = field.analysis != null ? field.addtomap : false
                 newField.setAddtomap(b)
 
-                b = field.analysis != null ?  field.analysis : false
+                b = field.analysis != null ? field.analysis : false
                 newField.setAnalysis(b)
 
                 b = field.defaultlayer != null ? field.defaultlayer : false
@@ -1177,7 +1178,7 @@ class ManageLayersService {
                 b = field.layerbranch != null ? field.layerbranch : false
                 newField.setLayerbranch(b)
 
-                b = field.namesearch != null ?  field.namesearch : false
+                b = field.namesearch != null ? field.namesearch : false
                 newField.setNamesearch(b)
                 if ("contextual".equalsIgnoreCase(lyr.type.toString())) {
                     newField.setSdesc(field.sdesc.toString())
@@ -1554,9 +1555,9 @@ class ManageLayersService {
 
         def min = diva.minval.round(2)
         def max = diva.maxval.round(2)
-        def mid = ((diva.maxval + diva.minval)/2).round(2)
-        def midMin = ((mid + diva.minval)/2).round(2)
-        def midMax = ((diva.maxval + mid)/2).round(2)
+        def mid = ((diva.maxval + diva.minval) / 2).round(2)
+        def midMin = ((mid + diva.minval) / 2).round(2)
+        def midMax = ((diva.maxval + mid) / 2).round(2)
 
         def nodatavalue = diva.nodatavalue
 
@@ -1584,11 +1585,11 @@ class ManageLayersService {
                 '<NamedLayer><Name>ALA:' + name + '</Name>' +
                 '<UserStyle><FeatureTypeStyle><Rule><RasterSymbolizer><Geometry></Geometry><ColorMap>' +
                 (nodatavalue < min ? '<ColorMapEntry color="0xffffff" opacity="0" quantity="' + nodatavalue + '"/>' : '') +
-                '<ColorMapEntry color="'+colour1 +'" opacity="1" quantity="' + min + '" label="' + ((float) min) + " " + diva.units + '"/>' +
-                '<ColorMapEntry color="'+colour2 +'" opacity="1" quantity="' + midMin + '"/>' +
-                '<ColorMapEntry color="'+colour3 +'" opacity="1" quantity="' + mid + '" label="' + ((float) mid) + " " + diva.units + '"/>' +
-                '<ColorMapEntry color="'+colour4 +'" opacity="1" quantity="' + midMax + '"/>' +
-                '<ColorMapEntry color="'+colour5 +'" opacity="1" quantity="' + max + '" label="' + ((float) max) + " " + diva.units + '"/>' +
+                '<ColorMapEntry color="' + colour1 + '" opacity="1" quantity="' + min + '" label="' + ((float) min) + " " + diva.units + '"/>' +
+                '<ColorMapEntry color="' + colour2 + '" opacity="1" quantity="' + midMin + '"/>' +
+                '<ColorMapEntry color="' + colour3 + '" opacity="1" quantity="' + mid + '" label="' + ((float) mid) + " " + diva.units + '"/>' +
+                '<ColorMapEntry color="' + colour4 + '" opacity="1" quantity="' + midMax + '"/>' +
+                '<ColorMapEntry color="' + colour5 + '" opacity="1" quantity="' + max + '" label="' + ((float) max) + " " + diva.units + '"/>' +
                 (nodatavalue > max ? '<ColorMapEntry color="0xffffff" opacity="0" quantity="' + nodatavalue + '"/>' : '') +
                 '</ColorMap></RasterSymbolizer></Rule></FeatureTypeStyle></UserStyle></NamedLayer></StyledLayerDescriptor>'
     }
