@@ -749,8 +749,6 @@ class ManageLayersService {
         return fieldMap
     }
 
-    def numberFormat = NumberFormat.getInstance(Locale.US)
-
     double[] getExtents(String rawId) {
         String geoserverUrl = spatialConfig.geoserver.url
         String geoserverUsername = spatialConfig.geoserver.username
@@ -775,10 +773,10 @@ class ManageLayersService {
 
             extents = new double[4]
 
-            extents[0] = numberFormat.parseDouble(bbox.get("minx").toString())
-            extents[1] = numberFormat.parseDouble(bbox.get("miny").toString())
-            extents[2] = numberFormat.parseDouble(bbox.get("maxx").toString())
-            extents[3] = numberFormat.parseDouble(bbox.get("maxy").toString())
+            extents[0] = ((Number)bbox.get("minx")).doubleValue()
+            extents[1] = ((Number)bbox.get("miny")).doubleValue()
+            extents[2] = ((Number)bbox.get("maxx")).doubleValue()
+            extents[3] = ((Number)bbox.get("maxy")).doubleValue()
         } catch (err) {
             log.debug 'failed feature layer, try coverage layer ' + rawId
             //try tif
@@ -795,10 +793,10 @@ class ManageLayersService {
                 JSONObject bbox = (JSONObject) ((JSONObject) jo.get("coverage")).get("latLonBoundingBox")
 
                 extents = new double[4]
-                extents[0] = numberFormat.parseDouble(bbox.get("minx").toString())
-                extents[1] = numberFormat.parseDouble(bbox.get("miny").toString())
-                extents[2] = numberFormat.parseDouble(bbox.get("maxx").toString())
-                extents[3] = numberFormat.parseDouble(bbox.get("maxy").toString())
+                extents[0] = ((Number)bbox.get("minx")).doubleValue()
+                extents[1] = ((Number)bbox.get("miny")).doubleValue()
+                extents[2] = ((Number)bbox.get("maxx")).doubleValue()
+                extents[3] = ((Number)bbox.get("maxy")).doubleValue()
             } catch (err2) {
                 log.error 'failed to parse bbox for upload id ' + rawId
             }
