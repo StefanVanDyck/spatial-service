@@ -486,7 +486,7 @@ class ManageLayersService {
             //fetch defaults
 
             //extents
-            double[] extents = getExtents(layerId)
+            double[] extents = getExtents(layer.name)
             if (extents == null) {
                 extents = [-180, -90, 180, 90]
             }
@@ -764,10 +764,12 @@ class ManageLayersService {
                     null,
                     "text/plain")
 
+            log.warn "GEOSERVER DEBUG BBOX: " + out[1]
+
 
             JSONObject jo = (JSONObject) JSON.parse(out[1])
 
-            JSONObject bbox = (JSONObject) ((JSONObject) jo.get("featureType")).get("nativeBoundingBox")
+            JSONObject bbox = (JSONObject) ((JSONObject) jo.get("featureType")).get("latLonBoundingBox")
 
             extents = new double[4]
 
@@ -788,7 +790,7 @@ class ManageLayersService {
 
             try {
                 JSONObject jo = (JSONObject) JSON.parse(out[1])
-                JSONObject bbox = (JSONObject) ((JSONObject) jo.get("coverage")).get("nativeBoundingBox")
+                JSONObject bbox = (JSONObject) ((JSONObject) jo.get("coverage")).get("latLonBoundingBox")
 
                 extents = new double[4]
                 extents[0] = Double.parseDouble(bbox.get("minx").toString())
