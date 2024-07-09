@@ -486,7 +486,7 @@ class ManageLayersService {
             //fetch defaults
 
             //extents
-            double[] extents = getExtents(layer.name)
+            double[] extents = getExtents(layerId)
             if (extents == null) {
                 extents = [-180, -90, 180, 90]
             }
@@ -749,6 +749,8 @@ class ManageLayersService {
         return fieldMap
     }
 
+    def numberFormat = NumberFormat.getInstance(Locale.US)
+
     double[] getExtents(String rawId) {
         String geoserverUrl = spatialConfig.geoserver.url
         String geoserverUsername = spatialConfig.geoserver.username
@@ -773,10 +775,10 @@ class ManageLayersService {
 
             extents = new double[4]
 
-            extents[0] = Double.parseDouble(bbox.get("minx").toString())
-            extents[1] = Double.parseDouble(bbox.get("miny").toString())
-            extents[2] = Double.parseDouble(bbox.get("maxx").toString())
-            extents[3] = Double.parseDouble(bbox.get("maxy").toString())
+            extents[0] = numberFormat.parseDouble(bbox.get("minx").toString())
+            extents[1] = numberFormat.parseDouble(bbox.get("miny").toString())
+            extents[2] = numberFormat.parseDouble(bbox.get("maxx").toString())
+            extents[3] = numberFormat.parseDouble(bbox.get("maxy").toString())
         } catch (err) {
             log.debug 'failed feature layer, try coverage layer ' + rawId
             //try tif
@@ -793,10 +795,10 @@ class ManageLayersService {
                 JSONObject bbox = (JSONObject) ((JSONObject) jo.get("coverage")).get("latLonBoundingBox")
 
                 extents = new double[4]
-                extents[0] = Double.parseDouble(bbox.get("minx").toString())
-                extents[1] = Double.parseDouble(bbox.get("miny").toString())
-                extents[2] = Double.parseDouble(bbox.get("maxx").toString())
-                extents[3] = Double.parseDouble(bbox.get("maxy").toString())
+                extents[0] = numberFormat.parseDouble(bbox.get("minx").toString())
+                extents[1] = numberFormat.parseDouble(bbox.get("miny").toString())
+                extents[2] = numberFormat.parseDouble(bbox.get("maxx").toString())
+                extents[3] = numberFormat.parseDouble(bbox.get("maxy").toString())
             } catch (err2) {
                 log.error 'failed to parse bbox for upload id ' + rawId
             }
