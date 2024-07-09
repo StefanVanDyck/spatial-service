@@ -769,7 +769,7 @@ class ManageLayersService {
 
             JSONObject jo = (JSONObject) JSON.parse(out[1])
 
-            JSONObject bbox = (JSONObject) ((JSONObject) jo.get("featureType")).get("latLonBoundingBox")
+            JSONObject bbox = (JSONObject) ((JSONObject) jo.get("featureType")).get("nativeBoundingBox")
 
             extents = new double[4]
 
@@ -790,7 +790,7 @@ class ManageLayersService {
 
             try {
                 JSONObject jo = (JSONObject) JSON.parse(out[1])
-                JSONObject bbox = (JSONObject) ((JSONObject) jo.get("coverage")).get("latLonBoundingBox")
+                JSONObject bbox = (JSONObject) ((JSONObject) jo.get("coverage")).get("nativeBoundingBox")
 
                 extents = new double[4]
                 extents[0] = ((Number)bbox.get("minx")).doubleValue()

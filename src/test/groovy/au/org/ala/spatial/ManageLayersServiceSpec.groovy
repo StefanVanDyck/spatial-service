@@ -19,9 +19,12 @@ import grails.testing.gorm.DomainUnitTest
 import grails.testing.services.ServiceUnitTest
 import org.apache.commons.io.FileUtils
 import org.grails.spring.beans.factory.InstanceFactoryBean
+import org.mockito.MockedStatic
+import org.mockito.Mockito
 import spock.lang.Specification
-
 import javax.sql.DataSource
+
+import static java.time.Instant.now
 
 class ManageLayersServiceSpec extends Specification implements ServiceUnitTest<ManageLayersService>, DomainUnitTest<Task> {
 
@@ -175,4 +178,158 @@ class ManageLayersServiceSpec extends Specification implements ServiceUnitTest<M
         columns == ["NAME_1", "TYPE"]
     }
 
+    void "getExtents"() {
+        given:
+        setupConfig()
+
+        MockedStatic<Util> util = Mockito.mockStatic(Util.class)
+        util.when(() -> Util.urlResponse(
+                Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()
+
+        )).thenReturn([
+                text: "{\n" +
+                        "    \"featureType\": {\n" +
+                        "        \"name\": 1720512162727,\n" +
+                        "        \"nativeName\": 1720512162727,\n" +
+                        "        \"namespace\": {\n" +
+                        "            \"name\": \"ALA\",\n" +
+                        "            \"href\": \"https://spatial.biodiversiteitsportaal.dev.svdev.be/geoserver/rest/namespaces/ALA.json\"\n" +
+                        "        },\n" +
+                        "        \"title\": 1720512162727,\n" +
+                        "        \"keywords\": {\n" +
+                        "            \"string\": [\n" +
+                        "                \"features\",\n" +
+                        "                1720512162727\n" +
+                        "            ]\n" +
+                        "        },\n" +
+                        "        \"nativeCRS\": {\n" +
+                        "            \"@class\": \"projected\",\n" +
+                        "            \"\$\": \"PROJCS[\\\"Belge_Lambert_1972\\\", \\n  GEOGCS[\\\"GCS_Belge_1972\\\", \\n    DATUM[\\\"D_Belge_1972\\\", \\n      SPHEROID[\\\"International_1924\\\", 6378388.0, 297.0]], \\n    PRIMEM[\\\"Greenwich\\\", 0.0], \\n    UNIT[\\\"degree\\\", 0.017453292519943295], \\n    AXIS[\\\"Longitude\\\", EAST], \\n    AXIS[\\\"Latitude\\\", NORTH]], \\n  PROJECTION[\\\"Lambert_Conformal_Conic\\\"], \\n  PARAMETER[\\\"central_meridian\\\", 4.367486666666666], \\n  PARAMETER[\\\"latitude_of_origin\\\", 90.0], \\n  PARAMETER[\\\"standard_parallel_1\\\", 51.16666723333333], \\n  PARAMETER[\\\"false_easting\\\", 150000.01256], \\n  PARAMETER[\\\"false_northing\\\", 5400088.4378], \\n  PARAMETER[\\\"scale_factor\\\", 1.0], \\n  PARAMETER[\\\"standard_parallel_2\\\", 49.8333339], \\n  UNIT[\\\"m\\\", 1.0], \\n  AXIS[\\\"x\\\", EAST], \\n  AXIS[\\\"y\\\", NORTH]]\"\n" +
+                        "        },\n" +
+                        "        \"srs\": \"EPSG:31370\",\n" +
+                        "        \"nativeBoundingBox\": {\n" +
+                        "            \"minx\": 21991.632100000978,\n" +
+                        "            \"maxx\": 258871.83929999918,\n" +
+                        "            \"miny\": 153058.3299999982,\n" +
+                        "            \"maxy\": 244027.2100000009,\n" +
+                        "            \"crs\": {\n" +
+                        "                \"@class\": \"projected\",\n" +
+                        "                \"\$\": \"EPSG:31370\"\n" +
+                        "            }\n" +
+                        "        },\n" +
+                        "        \"latLonBoundingBox\": {\n" +
+                        "            \"minx\": 2.5256559043435876,\n" +
+                        "            \"maxx\": 5.936422407658288,\n" +
+                        "            \"miny\": 50.67408554457257,\n" +
+                        "            \"maxy\": 51.50572596653099,\n" +
+                        "            \"crs\": \"EPSG:4326\"\n" +
+                        "        },\n" +
+                        "        \"projectionPolicy\": \"FORCE_DECLARED\",\n" +
+                        "        \"enabled\": true,\n" +
+                        "        \"store\": {\n" +
+                        "            \"@class\": \"dataStore\",\n" +
+                        "            \"name\": \"ALA:1720512162727\",\n" +
+                        "            \"href\": \"https://spatial.biodiversiteitsportaal.dev.svdev.be/geoserver/rest/workspaces/ALA/datastores/1720512162727.json\"\n" +
+                        "        },\n" +
+                        "        \"serviceConfiguration\": false,\n" +
+                        "        \"simpleConversionEnabled\": false,\n" +
+                        "        \"maxFeatures\": 0,\n" +
+                        "        \"numDecimals\": 0,\n" +
+                        "        \"padWithZeros\": false,\n" +
+                        "        \"forcedDecimal\": false,\n" +
+                        "        \"overridingServiceSRS\": false,\n" +
+                        "        \"skipNumberMatched\": false,\n" +
+                        "        \"circularArcPresent\": false,\n" +
+                        "        \"attributes\": {\n" +
+                        "            \"attribute\": [\n" +
+                        "                {\n" +
+                        "                    \"name\": \"the_geom\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"org.locationtech.jts.geom.MultiPolygon\"\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"name\": \"OIDN\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"java.lang.Long\",\n" +
+                        "                    \"length\": 15\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"name\": \"UIDN\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"java.lang.Long\",\n" +
+                        "                    \"length\": 15\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"name\": \"TERRID\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"java.lang.Long\",\n" +
+                        "                    \"length\": 10\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"name\": \"NAAM\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"java.lang.String\",\n" +
+                        "                    \"length\": 64\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"name\": \"NISCODE\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"java.lang.String\",\n" +
+                        "                    \"length\": 5\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"name\": \"NUTS1\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"java.lang.String\",\n" +
+                        "                    \"length\": 10\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"name\": \"LENGTE\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"java.lang.Double\",\n" +
+                        "                    \"length\": 16\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"name\": \"OPPERVL\",\n" +
+                        "                    \"minOccurs\": 0,\n" +
+                        "                    \"maxOccurs\": 1,\n" +
+                        "                    \"nillable\": true,\n" +
+                        "                    \"binding\": \"java.lang.Double\",\n" +
+                        "                    \"length\": 16\n" +
+                        "                }\n" +
+                        "            ]\n" +
+                        "        }\n" +
+                        "    }\n" +
+                        "}"
+        ]);
+
+        def rawId = now().toEpochMilli().toString()
+
+        when:
+        def bbox = service.getExtents(rawId)
+
+        then:
+        bbox.toList() == [21991.632100000978, 153058.3299999982, 258871.83929999918, 244027.2100000009]
+
+        cleanup:
+        util?.close()
+    }
 }
+
+

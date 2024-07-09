@@ -118,7 +118,7 @@ dependencies {
     testImplementation platform("org.spockframework:spock-bom:2.1-groovy-3.0")
     testImplementation "org.spockframework:spock-core"
     testImplementation "org.grails:grails-gorm-testing-support"
-    testImplementation "org.mockito:mockito-core"
+    testImplementation "org.mockito:mockito-inline"
     testImplementation "org.grails:grails-web-testing-support"
     testImplementation "org.grails.plugins:geb"
     testImplementation "org.seleniumhq.selenium:selenium-remote-driver:3.14.0"
