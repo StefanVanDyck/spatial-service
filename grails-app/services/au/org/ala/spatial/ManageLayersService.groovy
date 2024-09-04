@@ -770,16 +770,14 @@ class ManageLayersService {
                     "text/plain")
 
 
-            JSONObject jo = (JSONObject) JSON.parse(out[1])
-
-            JSONObject bbox = (JSONObject) ((JSONObject) jo.get("featureType")).get("nativeBoundingBox")
+            def jo = JSON.parse(out[1])
+            def bbox = jo.get("featureType").get("nativeBoundingBox")
 
             extents = new double[4]
-
-            extents[0] = Double.parseDouble(bbox.get("minx").toString())
-            extents[1] = Double.parseDouble(bbox.get("miny").toString())
-            extents[2] = Double.parseDouble(bbox.get("maxx").toString())
-            extents[3] = Double.parseDouble(bbox.get("maxy").toString())
+            extents[0] = bbox.getDouble("minx")
+            extents[1] = bbox.getDouble("miny")
+            extents[2] = bbox.getDouble("maxx")
+            extents[3] = bbox.getDouble("maxy")
         } catch (err) {
             log.debug 'failed feature layer, try coverage layer ' + rawId
             //try tif
@@ -790,22 +788,22 @@ class ManageLayersService {
                     null,
                     "text/plain")
 
-
             try {
-                JSONObject jo = (JSONObject) JSON.parse(out[1])
-                JSONObject bbox = (JSONObject) ((JSONObject) jo.get("coverage")).get("nativeBoundingBox")
+                def jo = JSON.parse(out[1])
+                def bbox = jo.get("coverage").get("nativeBoundingBox")
 
                 extents = new double[4]
-                extents[0] = Double.parseDouble(bbox.get("minx").toString())
-                extents[1] = Double.parseDouble(bbox.get("miny").toString())
-                extents[2] = Double.parseDouble(bbox.get("maxx").toString())
-                extents[3] = Double.parseDouble(bbox.get("maxy").toString())
+                extents[0] = bbox.getDouble("minx")
+                extents[1] = bbox.getDouble("miny")
+                extents[2] = bbox.getDouble("maxx")
+                extents[3] = bbox.getDouble("maxy")
             } catch (err2) {
                 log.error 'failed to parse bbox for upload id ' + rawId
             }
 
         }
 
+        log.debug("bbox: {}", extents)
         return extents
     }
 
