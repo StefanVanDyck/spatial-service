@@ -881,6 +881,9 @@ class ManageLayersService {
             } catch (Exception ignored) {}
         }
 
+        log.debug("Ultimate layer entity: {}", layer)
+        log.debug("MaxLongDebug: {}", layer.getMaxlongitude())
+
         createOrUpdateLayer(layer, id, createTask)
     }
 
