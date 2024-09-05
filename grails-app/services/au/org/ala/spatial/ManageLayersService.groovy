@@ -871,6 +871,7 @@ class ManageLayersService {
         Layers layer = Layers.get(id) ?: new Layers()
         layer.properties.each {
             if (map.containsKey(it.key)) {
+                log.debug("Setting layer property ${it.key} to ${map.get(it.key)}")
                 layer.properties.put(it.key, map.get(it.key))
             }
         }
