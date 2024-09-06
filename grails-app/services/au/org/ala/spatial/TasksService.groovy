@@ -90,7 +90,9 @@ class TasksService {
         if (input == null) input = [:] as Map
 
         //get task spec
-        ProcessSpecification spec = getSpecification(true).get(name)
+        def specs = getSpecification(true)
+        log.warn("Specs: " + specs)
+        ProcessSpecification spec = specs.get(name)
 
         if (spec == null) {
             log.error("failed to find spec for: " + name)
