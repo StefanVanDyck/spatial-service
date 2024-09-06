@@ -633,6 +633,11 @@ class ManageLayersService {
                 geoserverUsername, geoserverPassword,
                 null, null,
                 "text/plain");
+
+        def layerDataFolder = new File(spatialConfig.data.dir.toString() + "/uploads/" + id)
+        if (layerDataFolder.exists()) {
+            FileUtils.deleteDirectory(layerDataFolder)
+        }
     }
 
     def deleteField(String fieldId) {
