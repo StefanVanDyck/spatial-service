@@ -85,6 +85,7 @@ class TasksService {
     * 'input' is map of [inputName: inputValue]
     * 'identifier' is used to tag the process for making this instance unique, e.g. hash of input
     */
+
     @Transactional(readOnly = false)
     def create(name, identifier, input, sessionId = null, userId = null, email = null) {
         if (input == null) input = [:] as Map
@@ -251,7 +252,7 @@ class TasksService {
         }
 
         taskWrapper.task.output = formattedOutput
-        taskWrapper.task.output.each {it.task = taskWrapper.task }
+        taskWrapper.task.output.each { it.task = taskWrapper.task }
     }
 
     /**
@@ -267,7 +268,10 @@ class TasksService {
         if (input == null) input = [:] as Map
 
         //get task spec
-        def spec = getSpecification(isAdmin).get(name)
+
+        def specs = getSpecification(isAdmin)
+        def spec = specs.get(name)
+        log.warn("Specs: {}", specs)
 
         def errors = [:]
 
@@ -515,8 +519,8 @@ class TasksService {
         List list = []
 
         def resolver = new PathMatchingResourcePatternResolver()
-        Resource[] resources = resolver.getResources("/processes/*.json") ;
-        for (Resource resource: resources){
+        Resource[] resources = resolver.getResources("/processes/*.json");
+        for (Resource resource : resources) {
             log.warn("Resource: " + resource.getFilename())
             if (resource.getFilename() != "limits.json") {
                 String name = "au.org.ala.spatial.process." + resource.getFilename().substring(0, resource.getFilename().length() - 5)
