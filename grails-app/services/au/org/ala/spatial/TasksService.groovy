@@ -24,6 +24,8 @@ import au.org.ala.ws.service.WebService
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
 import org.apache.commons.lang3.StringUtils
+import org.grails.io.support.PathMatchingResourcePatternResolver
+import org.grails.io.support.Resource
 
 import static au.org.ala.spatial.dto.ProcessSpecification.InputType.AREA
 import static au.org.ala.spatial.dto.ProcessSpecification.InputType.DOUBLE
@@ -516,13 +518,11 @@ class TasksService {
     List getAllSpec() {
         List list = []
 
-        def resource = TaskQueueService.class.getResource("/processes/")
-        def dir = new File(resource.getPath())
-
-        // default processes
-        for (File f : dir.listFiles()) {
-            if (f.getName().endsWith(".json") && f.getName() != "limits.json") {
-                String name = "au.org.ala.spatial.process." + f.getName().substring(0, f.getName().length() - 5)
+        def resolver = new PathMatchingResourcePatternResolver()
+        Resource[] resources = resolver.getResources("/processes/*.json") ;
+        for (Resource resource: resources){
+            if (resource.getFilename() != "limits.json") {
+                String name = "au.org.ala.spatial.process." + resource.getFilename().substring(0, resource.getFilename().length() - 5)
                 try {
                     Class clazz = Class.forName(name)
                     list.add(((SlaveProcess) clazz.newInstance()).spec(null))
