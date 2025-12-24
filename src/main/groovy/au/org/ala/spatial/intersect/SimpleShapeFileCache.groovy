@@ -13,6 +13,10 @@
  * rights and limitations under the License.
  ***************************************************************************/
 package au.org.ala.spatial.intersect
+
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
+
 /**
  * @author Adam
  */
@@ -20,53 +24,15 @@ package au.org.ala.spatial.intersect
 import groovy.util.logging.Slf4j
 
 @Slf4j
-//@CompileStatic
 class SimpleShapeFileCache {
+    private final ConcurrentMap<String, SimpleShapeFile> cache = new ConcurrentHashMap<>()
 
     /**
-     * Log4j instance
+     * Get a cached SimpleShapeFile (by filename+field) or create and cache it if absent.
      */
-
-    HashMap<String, SimpleShapeFile> cache
-    HashMap<String, SimpleShapeFile> cacheByFieldId
-
-    SimpleShapeFileCache(String[] shapeFileNames, String[] columns, String[] fieldIds) {
-        cache = new HashMap<String, SimpleShapeFile>()
-        cacheByFieldId = new HashMap<String, SimpleShapeFile>()
-        update(shapeFileNames, columns, fieldIds)
+    SimpleShapeFile get(String filename, String fieldName) {
+        String key = "${filename}::${fieldName}"
+        return cache.computeIfAbsent(key) { new SimpleShapeFile(filename, fieldName) }
     }
 
-    SimpleShapeFile get(String shapeFileName) {
-        return cache.get(shapeFileName)
-    }
-
-    HashMap<String, SimpleShapeFile> getAll() {
-        return cacheByFieldId
-    }
-
-    void update(String[] layers, String[] columns, String[] fieldIds) {
-        //add layers not loaded
-        log.debug("start caching shape files")
-        System.gc()
-        log.debug("Memory usage (total/used/free):" + (Runtime.getRuntime().totalMemory() / 1024 / 1024) + "MB / " + (Runtime.getRuntime().totalMemory() / 1024 / 1024 - Runtime.getRuntime().freeMemory() / 1024 / 1024) + "MB / " + (Runtime.getRuntime().freeMemory() / 1024 / 1024) + "MB")
-        for (int i = 0; i < layers.length; i++) {
-            if (get(layers[i]) == null) {
-                try {
-                    SimpleShapeFile ssf = new SimpleShapeFile(layers[i], columns[i].split(","))
-                    System.gc()
-                    log.debug(layers[i] + " loaded, Memory usage (total/used/free):" + (Runtime.getRuntime().totalMemory() / 1024 / 1024) + "MB / " + (Runtime.getRuntime().totalMemory() / 1024 / 1024 - Runtime.getRuntime().freeMemory() / 1024 / 1024) + "MB / " + (Runtime.getRuntime().freeMemory() / 1024 / 1024) + "MB")
-
-                    if (ssf != null) {
-                        cache.put(layers[i], ssf)
-                        for (String f : fieldIds[i].split(",")) {
-                            cacheByFieldId.put(f, ssf)
-                        }
-                    }
-                } catch (Exception e) {
-                    log.error("error with shape file: " + layers[i] + ", field: " + columns[i])
-                    log.error(e.getMessage(), e)
-                }
-            }
-        }
-    }
 }

@@ -161,7 +161,7 @@ class SamplingThread extends Thread {
             SimpleShapeFile ssf = null
 
             if (simpleShapeFileCache != null) {
-                ssf = simpleShapeFileCache.get(filename)
+                ssf = simpleShapeFileCache.get(filename, fieldName)
             }
 
             if (ssf == null) {
