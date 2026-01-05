@@ -33,7 +33,7 @@ class LayerService {
 
     SpatialConfig spatialConfig
     FieldService fieldService
-    SimpleShapeFileCache simpleShapeFileCache
+    SimpleShapeFileCache simpleShapeFileCache = new SimpleShapeFileCache()
 
     ConcurrentHashMap<String, IntersectionFile> intersectionFiles = new ConcurrentHashMap()
     ConcurrentHashMap<String, HashMap<Integer, GridClass>> classGrids = new ConcurrentHashMap<>()

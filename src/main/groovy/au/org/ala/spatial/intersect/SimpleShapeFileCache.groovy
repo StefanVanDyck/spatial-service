@@ -32,7 +32,12 @@ class SimpleShapeFileCache {
      */
     SimpleShapeFile get(String filename, String fieldName) {
         String key = "${filename}::${fieldName}"
-        return cache.computeIfAbsent(key) { new SimpleShapeFile(filename, fieldName) }
+        return cache.computeIfAbsent(key) {
+            {
+                log.warn("Loading unloaded shapefile: {} | {}", filename, fieldName)
+                return new SimpleShapeFile(filename, fieldName)
+            }
+        }
     }
 
 }
