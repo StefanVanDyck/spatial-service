@@ -328,11 +328,14 @@ class AreaReportPDF {
     }
 
     String queryAndFq(String fq) throws UnsupportedEncodingException {
+        def ret
         if (fq == null) {
-            return query
+            ret = query
         } else {
-            return query + "&fq=" + URLEncoder.encode(fq, StandardCharsets.UTF_8).replace("+", "%20")
+            ret = query + "&fq=" + URLEncoder.encode(fq, StandardCharsets.UTF_8).replace("+", "%20")
         }
+        log.info("queryAndFq: " + ret)
+        return ret
     }
 
     String getValue(JSONObject item, Integer itemIdx, JSONObject parent, Integer parentIdx, String title) throws Exception {
@@ -358,6 +361,7 @@ class AreaReportPDF {
                     // TODO: support fq term in getEndemicSpeciesCount, and confirm that this will give the expected result
                     value = getEndemicSpeciesCount(query)
                 } else {
+                    log.info("getSpeciesCount for : " + text + " with fq: " + fq)
                     value = getSpeciesCount(queryAndFq(fq))
                 }
             } else if (type == "occurrences") {
@@ -1073,8 +1077,11 @@ class AreaReportPDF {
     }
 
     String getSpeciesCount(String q) {
+//        log.info("ARPDF: getSpeciesCount: query='${q}'")
+
         String list = Util.getUrl(biocacheServiceUrl + "/occurrence/facets?facets=names_and_lsid&flimit=0&q=" + q)
 
+        log.info("ARPDF: getSpeciesCount: fq='${q}' response='${list}'")
 
 
         String count = "0"

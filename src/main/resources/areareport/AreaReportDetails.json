@@ -102,33 +102,6 @@
     "items": [
       {
         "type": "text",
-        "text": "National Dynamic Land Cover"
-      },
-      {
-        "type": "text",
-        "text": "The Dynamic Land Cover Dataset is the first nationally consistent and thematically comprehensive land cover reference for Australia. It provides a base-line for reporting on change and trends in vegetation cover and extent. Information about land cover dynamics is essential to understanding and addressing a range of national challenges such as drought, salinity, water availability and ecosystem health. The data is a synopsis of land cover information for every 250m by 250m area of the country from April 2000 to April 2008. The classification scheme used to describe land cover categories in the Dataset conforms to the 2007 International Standards Organisation (ISO) land cover standard (19144-2). The Dataset shows Australian land covers clustered into 34 ISO classes. These reflect the structural character of vegetation, ranging from cultivated and managed land covers (crops and pastures) to natural land covers such as closed forest and open grasslands. [Ref1]<br></br>Australia's Dynamic Land Cover: <a href='http://www.ga.gov.au/earth-observation/landcover.html'>http://www.ga.gov.au/earth-observation/landcover.html</a><br></br>National Dynamic Land Cover layer: Classification: Vegetation; Type: Contextual (polygonal); Metadata contact organisation: Geoscience Australia (GA). <a href='https://spatial.ala.org.au/ws/layers/view/more/dlcmv1'>https://spatial.ala.org.au/ws/layers/view/more/dlcmv1</a>"
-      },
-      {
-        "type": "map",
-        "buffer": 0.3,
-        "layer": "dlcmv1",
-        "legendUrl": "https://spatial.ala.org.au/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=9&LAYER=dlcmv1"
-      },
-      {
-        "type": "figure"
-      },
-      {
-        "type": "table",
-        "table": "tabulation",
-        "value": "cl1918"
-      }
-    ]
-  },
-  {
-    "type": "general",
-    "items": [
-      {
-        "type": "text",
         "text": "Occurrences"
       },
       {
