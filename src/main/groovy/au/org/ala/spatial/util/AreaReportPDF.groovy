@@ -282,7 +282,7 @@ class AreaReportPDF {
         FileUtils.writeByteArrayToFile(headerImgFile, imageBytes)
 
         sb.append("<div>")
-        sb.append("<img class='imgHeader' src='header.jpg' width='100%' ></img>")
+        sb.append("<img class='imgHeader' src='header.jpg' ></img>")
         sb.append("<table class='dashboard' >")
 
         int idx = 0
