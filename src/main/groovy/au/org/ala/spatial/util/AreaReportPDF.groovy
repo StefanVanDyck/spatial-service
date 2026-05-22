@@ -493,13 +493,6 @@ class AreaReportPDF {
         } else if (fq != null) {
             ml = createSpeciesLayer(query + "&fq=" + fq, red, green, blue, opacity.floatValue(), grid, size, uncertainty)
         }
-        log.info("Debug Map Render")
-        log.info("makeMap: Original bbox='${this.bbox}'")
-        log.info("makeMap: Calculated extents='${extents}'")
-        log.info("makeMap: Layer='${layer}', fq='${fq}'")
-        log.info("makeMap: Generated map layer URL='${ml}'")
-        log.info("makeMap: geoserverUrl='${geoserverUrl}', biocacheServiceUrl='${biocacheServiceUrl}'")
-        log.info("makeMap: Color='(${red}, ${green}, ${blue})', Opacity='${opacity}'")
 
         saveImage(imageFile, new PrintMapComposer(geoserverUrl, openstreetmapUrl, extents, basemap, new String[]{mlArea, ml}, aspectRatio, "", type, resolution, dataDir, null).get())
 
