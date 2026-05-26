@@ -94,7 +94,7 @@
       },
       {
         "type": "text",
-        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean. [Ref6]"
+        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean."
       },
       {
         "label": "Number of occurrences (spatially valid only): <b>%s</b>",
@@ -124,7 +124,7 @@
       },
       {
         "type": "text",
-        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean. [Ref6]"
+        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean."
       },
       {
         "label": "Number of species (spatially valid only): <b>%s</b>",
