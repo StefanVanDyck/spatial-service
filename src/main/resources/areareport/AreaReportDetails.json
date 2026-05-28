@@ -139,10 +139,13 @@
   },
   {
     "type": "general",
-    "subpages": 24,
+    "subpages": 27,
     "text0": [
       "All threatened species",
       "All invasive species",
+      "Jachtdecreet",
+      "Meetnetten INBO",
+      "Soortenbesluit",
       "Lifeform - Algae",
       "Lifeform - Amphibians",
       "Lifeform - Angiosperms",
@@ -169,6 +172,9 @@
     "label1": [
       "Number of threatened species: <b>%s</b>",
       "Number of invasive species: <b>%s</b>",
+      "Number of species in Jachtdecreet: <b>%s</b>",
+      "Number of species in Meetnetten INBO: <b>%s</b>",
+      "Number of species in Soortenbesluit: <b>%s</b>",
       "Number of Algae <b>%s</b>",
       "Number of Amphibians <b>%s</b>",
       "Number of Angiosperms <b>%s</b>",
@@ -195,6 +201,9 @@
     "fqs": [
       "species_list_uid:dr573 OR species_list_uid:dr559",
       "species_list_uid:dr561 OR species_list_uid:dr358",
+      "species_list_uid:dr492",
+      "species_list_uid:dr498",
+      "species_list_uid:dr542",
       "species_group:Algae",
       "species_group:Amphibians",
       "species_group:Angiosperms",
@@ -234,23 +243,6 @@
       {
         "type": "table",
         "table": "species"
-      }
-    ]
-  },
-  {
-    "type": "general",
-    "items": [
-      {
-        "text": "Checklist Areas",
-        "type": "text"
-      },
-      {
-        "label": "Number of checklist areas: <b>%s</b>",
-        "type": "checklists"
-      },
-      {
-        "type": "table",
-        "table": "checklists"
       }
     ]
   }
