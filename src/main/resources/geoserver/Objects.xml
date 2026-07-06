@@ -46,7 +46,7 @@
                 <parameter>
                     <name>s</name>
                     <defaultValue>3744863</defaultValue>
-                    <regexpValidator>^[\w\d]+$</regexpValidator>
+                    <regexpValidator>^[\w~]+$</regexpValidator>
                 </parameter>
             </virtualTable>
         </entry>
