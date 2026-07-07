@@ -1,4 +1,4 @@
-FROM kartoza/geoserver:2.23.2
+FROM kartoza/geoserver:2.28.2
 
 RUN apt-get -y update && apt-get install -y wget netcat
 
