@@ -21,7 +21,6 @@ import org.grails.web.json.JSONObject
 import org.locationtech.jts.geom.Geometry
 import org.locationtech.jts.io.WKTReader
 import org.springframework.util.StreamUtils
-import org.yaml.snakeyaml.util.UriEncoder
 
 import java.awt.*
 import java.nio.charset.StandardCharsets
@@ -283,7 +282,7 @@ class AreaReportPDF {
         FileUtils.writeByteArrayToFile(headerImgFile, imageBytes)
 
         sb.append("<div>")
-        sb.append("<img class='imgHeader' src='header.jpg' width='100%' ></img>")
+        sb.append("<img class='imgHeader' src='header.jpg' ></img>")
         sb.append("<table class='dashboard' >")
 
         int idx = 0
@@ -332,7 +331,7 @@ class AreaReportPDF {
         if (fq == null) {
             return query
         } else {
-            return query + "&fq=" + UriEncoder.encode(fq)
+            return query + "&fq=" + URLEncoder.encode(fq, StandardCharsets.UTF_8).replace("+", "%20")
         }
     }
 
@@ -1054,7 +1053,7 @@ class AreaReportPDF {
         String ml = uri + q
 
         try {
-            ml += "&ENV=" + UriEncoder.encode(envString.replace("'", "\\'"))
+            ml += "&ENV=" + URLEncoder.encode(envString.replace("'", "\\'"), StandardCharsets.UTF_8)
         } catch (Exception ignored) {
         }
 
@@ -1074,9 +1073,8 @@ class AreaReportPDF {
     }
 
     String getSpeciesCount(String q) {
+
         String list = Util.getUrl(biocacheServiceUrl + "/occurrence/facets?facets=names_and_lsid&flimit=0&q=" + q)
-
-
 
         String count = "0"
         try {

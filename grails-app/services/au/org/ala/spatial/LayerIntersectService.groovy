@@ -265,7 +265,7 @@ class LayerIntersectService {
 
             if (f != null) {
                 if (f.getShapeFields() != null && layerService.getShapeFileCache() != null) {
-                    SimpleShapeFile ssf = layerService.getShapeFileCache().get(f.getFilePath())
+                    SimpleShapeFile ssf = layerService.getShapeFileCache().get(f.getFilePath(), f.getShapeFields())
                     if (ssf != null) {
                         int column_idx = ssf.getColumnIdx(f.getShapeFields())
                         String[] categories = ssf.getColumnLookup(column_idx)
@@ -360,16 +360,16 @@ class LayerIntersectService {
 
         HashMap<String, String> output = new HashMap<String, String>()
 
-        if (layerService.getShapeFileCache() != null) {
-            HashMap<String, SimpleShapeFile> ssfs = layerService.getShapeFileCache().getAll()
-            for (Entry<String, SimpleShapeFile> entry : ssfs.entrySet()) {
-                String s = entry.getValue().intersect(longitude, latitude)
-                if (s == null) {
-                    s = ""
-                }
-                output.put(entry.getKey(), s)
-            }
-        }
+//        if (layerService.getShapeFileCache() != null) {
+//            HashMap<String, SimpleShapeFile> ssfs = layerService.getShapeFileCache().getAll()
+//            for (Entry<String, SimpleShapeFile> entry : ssfs.entrySet()) {
+//                String s = entry.getValue().intersect(longitude, latitude)
+//                if (s == null) {
+//                    s = ""
+//                }
+//                output.put(entry.getKey(), s)
+//            }
+//        }
 
         if (gridReaders != null) {
             GridCacheReader gcr = null

@@ -18,38 +18,16 @@
         "type": "occurrences"
       },
       {
-        "label": "Endemic species: %s",
-        "type": "species",
-        "endemic": true,
-        "field": "names_and_lsid"
-      },
-      {
         "label": "All threatened species: %s",
         "type": "species",
         "field": "names_and_lsid",
-        "fq": "species_list_uid:dr1782 OR species_list_uid:dr967 OR species_list_uid:dr656 OR species_list_uid:dr649 OR species_list_uid:dr650 OR species_list_uid:dr651 OR species_list_uid:dr492 OR species_list_uid:dr1770 OR species_list_uid:dr493 OR species_list_uid:dr653 OR species_list_uid:dr884 OR species_list_uid:dr654 OR species_list_uid:dr655 OR species_list_uid:dr490 OR species_list_uid:dr2201"
-      },
-      {
-        "label": "Migratory species: %s",
-        "type": "species",
-        "field": "names_and_lsid",
-        "fq": "species_list_uid:dr1005"
+        "fq": "species_list_uid:dr573 OR species_list_uid:dr559"
       },
       {
         "label": "All invasive species: %s",
         "type": "species",
         "field": "names_and_lsid",
-        "fq": "species_list_uid:dr947 OR species_list_uid:dr707 OR species_list_uid:dr945 OR species_list_uid:dr873 OR species_list_uid:dr872 OR species_list_uid:dr1105 OR species_list_uid:dr1787 OR species_list_uid:dr943 OR species_list_uid:dr877 OR species_list_uid:dr878 OR species_list_uid:dr1013 OR species_list_uid:dr879 OR species_list_uid:dr880 OR species_list_uid:dr881 OR species_list_uid:dr882 OR species_list_uid:dr883 OR species_list_uid:dr927 OR species_list_uid:dr823"
-      },
-      {
-        "label": "Iconic species: %s",
-        "type": "species",
-        "field": "names_and_lsid",
-        "fq": "species_list_uid:dr781"
-      },
-      {
-        "label": "JournalMap Articles: %s",
-        "type": "journalmap"
+        "fq": "species_list_uid:dr561 OR species_list_uid:dr358"
       },
       {
         "label": "Animals: %s",
@@ -64,10 +42,16 @@
         "fq": "species_group:Plants"
       },
       {
-        "label": "Birds: %s",
+        "label": "Fungi: %s",
         "type": "species",
         "field": "names_and_lsid",
-        "fq": "species_group:Birds"
+        "fq": "species_group:Fungi"
+      },
+      {
+        "label": "Bacteria: %s",
+        "type": "species",
+        "field": "names_and_lsid",
+        "fq": "species_group:Bacteria"
       }
     ]
   },
@@ -102,33 +86,6 @@
     "items": [
       {
         "type": "text",
-        "text": "National Dynamic Land Cover"
-      },
-      {
-        "type": "text",
-        "text": "The Dynamic Land Cover Dataset is the first nationally consistent and thematically comprehensive land cover reference for Australia. It provides a base-line for reporting on change and trends in vegetation cover and extent. Information about land cover dynamics is essential to understanding and addressing a range of national challenges such as drought, salinity, water availability and ecosystem health. The data is a synopsis of land cover information for every 250m by 250m area of the country from April 2000 to April 2008. The classification scheme used to describe land cover categories in the Dataset conforms to the 2007 International Standards Organisation (ISO) land cover standard (19144-2). The Dataset shows Australian land covers clustered into 34 ISO classes. These reflect the structural character of vegetation, ranging from cultivated and managed land covers (crops and pastures) to natural land covers such as closed forest and open grasslands. [Ref1]<br></br>Australia's Dynamic Land Cover: <a href='http://www.ga.gov.au/earth-observation/landcover.html'>http://www.ga.gov.au/earth-observation/landcover.html</a><br></br>National Dynamic Land Cover layer: Classification: Vegetation; Type: Contextual (polygonal); Metadata contact organisation: Geoscience Australia (GA). <a href='https://spatial.ala.org.au/ws/layers/view/more/dlcmv1'>https://spatial.ala.org.au/ws/layers/view/more/dlcmv1</a>"
-      },
-      {
-        "type": "map",
-        "buffer": 0.3,
-        "layer": "dlcmv1",
-        "legendUrl": "https://spatial.ala.org.au/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=9&LAYER=dlcmv1"
-      },
-      {
-        "type": "figure"
-      },
-      {
-        "type": "table",
-        "table": "tabulation",
-        "value": "cl1918"
-      }
-    ]
-  },
-  {
-    "type": "general",
-    "items": [
-      {
-        "type": "text",
         "text": "Occurrences"
       },
       {
@@ -137,7 +94,7 @@
       },
       {
         "type": "text",
-        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean. [Ref6]"
+        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean."
       },
       {
         "label": "Number of occurrences (spatially valid only): <b>%s</b>",
@@ -167,7 +124,7 @@
       },
       {
         "type": "text",
-        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean. [Ref6]"
+        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean."
       },
       {
         "label": "Number of species (spatially valid only): <b>%s</b>",
@@ -182,41 +139,13 @@
   },
   {
     "type": "general",
-    "items": [
-      {
-        "type": "text",
-        "text": "Endemic Species"
-      },
-      {
-        "label": "Endemic Species: <b>%s</b>",
-        "type": "species",
-        "endemic": true
-      },
-      {
-        "type": "text",
-        "text": "Spatially valid records are considered those that do not have any type of flag questioning their location, for example a terrestrial species being recorded in the ocean. [Ref6]"
-      },
-      {
-        "label": "Number of endemic species (spatially valid only): <b>%s</b>",
-        "type": "species",
-        "endemic": true,
-        "fq": "geospatial_kosher:true"
-      },
-      {
-        "type": "table",
-        "table": "species",
-        "endemic": true
-      }
-    ]
-  },
-  {
-    "type": "general",
-    "subpages": 26,
+    "subpages": 27,
     "text0": [
       "All threatened species",
       "All invasive species",
-      "Iconic species",
-      "Migratory species",
+      "Jachtdecreet",
+      "Meetnetten INBO",
+      "Soortenbesluit",
       "Lifeform - Algae",
       "Lifeform - Amphibians",
       "Lifeform - Angiosperms",
@@ -243,8 +172,9 @@
     "label1": [
       "Number of threatened species: <b>%s</b>",
       "Number of invasive species: <b>%s</b>",
-      "Number of iconic species: <b>%s</b>",
-      "Number of migratory species: <b>%s</b>",
+      "Number of species in Jachtdecreet: <b>%s</b>",
+      "Number of species in Meetnetten INBO: <b>%s</b>",
+      "Number of species in Soortenbesluit: <b>%s</b>",
       "Number of Algae <b>%s</b>",
       "Number of Amphibians <b>%s</b>",
       "Number of Angiosperms <b>%s</b>",
@@ -269,10 +199,11 @@
       "Number of Reptiles <b>%s</b>"
     ],
     "fqs": [
-      "species_list_uid:dr1782 OR species_list_uid:dr967 OR species_list_uid:dr656 OR species_list_uid:dr649 OR species_list_uid:dr650 OR species_list_uid:dr651 OR species_list_uid:dr492 OR species_list_uid:dr1770 OR species_list_uid:dr493 OR species_list_uid:dr653 OR species_list_uid:dr884 OR species_list_uid:dr654 OR species_list_uid:dr655 OR species_list_uid:dr490 OR species_list_uid:dr2201",
-      "species_list_uid:dr947 OR species_list_uid:dr707 OR species_list_uid:dr945 OR species_list_uid:dr873 OR species_list_uid:dr872 OR species_list_uid:dr1105 OR species_list_uid:dr1787 OR species_list_uid:dr943 OR species_list_uid:dr877 OR species_list_uid:dr878 OR species_list_uid:dr1013 OR species_list_uid:dr879 OR species_list_uid:dr880 OR species_list_uid:dr881 OR species_list_uid:dr882 OR species_list_uid:dr883 OR species_list_uid:dr927 OR species_list_uid:dr823",
-      "species_list_uid:dr781",
-      "species_list_uid:dr1005",
+      "species_list_uid:dr573 OR species_list_uid:dr559",
+      "species_list_uid:dr561 OR species_list_uid:dr358",
+      "species_list_uid:dr492",
+      "species_list_uid:dr498",
+      "species_list_uid:dr542",
       "species_group:Algae",
       "species_group:Amphibians",
       "species_group:Angiosperms",
@@ -314,64 +245,5 @@
         "table": "species"
       }
     ]
-  },
-  {
-    "type": "general",
-    "items": [
-      {
-        "text": "Expert Distributions",
-        "type": "text"
-      },
-      {
-        "label": "Number of expert distributions: <b>%s</b>",
-        "type": "expertdistributions"
-      },
-      {
-        "text": "Expert distributions are areas defined by experts of a species. Such areas identify where the species is expected to occur.",
-        "type": "text"
-      },
-      {
-        "type": "table",
-        "table": "expertdistributions"
-      }
-    ]
-  },
-  {
-    "type": "general",
-    "items": [
-      {
-        "text": "Checklist Areas",
-        "type": "text"
-      },
-      {
-        "label": "Number of checklist areas: <b>%s</b>",
-        "type": "checklists"
-      },
-      {
-        "type": "table",
-        "table": "checklists"
-      }
-    ]
-  },
-  {
-    "type": "general",
-    "items": [
-      {
-        "text": "JournalMap Articles",
-        "type": "text"
-      },
-      {
-        "label": "Number of JournalMap articles: <b>%s</b>",
-        "type": "journalmap"
-      },
-      {
-        "type": "table",
-        "table": "journalmap"
-      }
-    ]
-  },
-  {
-    "type": "file",
-    "file": "furtherLinks.html"
   }
 ]

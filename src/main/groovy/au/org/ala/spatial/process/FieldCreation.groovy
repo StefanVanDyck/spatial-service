@@ -27,8 +27,10 @@ import org.geotools.data.FeatureReader
 import org.geotools.data.shapefile.ShapefileDataStore
 import org.geotools.geometry.jts.JTSFactoryFinder
 import org.locationtech.jts.geom.Geometry
+import org.locationtech.jts.geom.MultiLineString
 import org.locationtech.jts.geom.MultiPolygon
 import org.locationtech.jts.geom.Polygon
+import org.geotools.geometry.jts.JTS
 
 import java.nio.charset.StandardCharsets
 import java.text.MessageFormat
@@ -370,6 +372,9 @@ class FieldCreation extends SlaveProcess {
                             for (int n = 0; n < g.getNumGeometries(); n++) {
                                 union.add((Polygon) g.getGeometryN(n))
                             }
+                        } else if(g instanceof MultiLineString) {
+                            def envelope = g.getEnvelopeInternal();
+                            union.add(JTS.toGeometry(envelope));
                         } else {
                             union.add((Polygon) g)
                         }

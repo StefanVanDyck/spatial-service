@@ -334,9 +334,13 @@ class PublishService {
                             callGeoserverDelete("/rest/workspaces/ALA/coveragestores/" + name)
                             //when the geoserver and spatial service are in the server, We can let Geoserver load the data via absolut path
                             if (spatialConfig.geoserver.spatialservice.colocated) {
-                                // Geoserver will use the tif file starting with 'file://', and no need to upload it
+                                // Geoserver will load the tif file from the shared filesystem, no need to upload it.
+                                // NOTE: a bare path is sent instead of a 'file://' URL. Since GeoServer 2.24 the
+                                // URL Checks security feature rejects unlisted file:// URLs, resulting in a
+                                // misleading "400 Failed to locate the input file". Bare paths (supported since
+                                // GeoServer 2.26) bypass the URL checker. This requires GeoServer >= 2.26.
                                 String[] result = callGeoserver("PUT", "/rest/workspaces/ALA/coveragestores/" + name + "/external.geotiff?configure=first",
-                                        null, "file://" + geotiff.getPath())
+                                        null, geotiff.getPath())
                                 if (result[0] != "200" && result[0] != "201") {
                                     errors.put(String.valueOf(System.currentTimeMillis()), result[0] + ": " + result[1])
                                 }
@@ -352,8 +356,9 @@ class PublishService {
 
                                 // create the layer
                                 // NOTE: The lines above upload files to Geoserver already.
+                                // A bare path is used instead of a 'file://' URL, see the colocated branch above.
                                 callGeoserver("PUT", "/rest/workspaces/ALA/coveragestores/" + name + "/external.geotiff?configure=first",
-                                        null, "file://" + spatialConfig.geoserver.remote.geoserver_data_dir + "/data/" + name + ".tif")
+                                        null, spatialConfig.geoserver.remote.geoserver_data_dir + "/data/" + name + ".tif")
 
                                 // upload the prj file
                                 if (tmpPrj.exists()) {
@@ -401,9 +406,10 @@ class PublishService {
                     callGeoserverDelete("/rest/workspaces/ALA/datastores/" + name)
 
                     if (spatialConfig.geoserver.spatialservice.colocated) {
-                        // Geoserver refers the extern data path (starting with 'file://') if it is colocated
+                        // Geoserver loads the shapefile from the shared filesystem when colocated.
+                        // A bare path is used instead of a 'file://' URL, see the geotiff branch above.
                         String[] result = callGeoserver("PUT", "/rest/workspaces/ALA/datastores/" + name + "/external.shp",
-                                null, "file://" + shp.getPath())
+                                null, shp.getPath())
                         if ("201" != result[0]) {
                             errors.put(String.valueOf(System.currentTimeMillis()), 'failed to upload shp to geoserver: ' + shp.getPath())
                             log.error 'Failed to upload shp to geoserver: ' + shp.getPath() + ". Check geoserver logs for details"
